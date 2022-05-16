@@ -20,14 +20,69 @@ Wisemen
 
 ---
 
+# Wie is Wisemen?
+
+<img class="absolute  top-0 left-0 -z-10"  src="/image-1.jpg">
+
+---
+
+# Work Hard / Play Hard
+
+<img class="h-100 rounded-lg"  src="/image-2.png">
+
+
+---
+
+# Wat maken wij?
+
+<img class="h-100 rounded-lg"  src="/image-3.gif">
+
+---
+
+# Strategie en UX Design
+
+<img class="h-100 rounded-lg"  src="/image-4.jpg">
+
+---
+
+# Native web Apps
+
+<img class="h-100 rounded-lg"  src="/image-5.png">
+
+---
+
+# Web development
+
+<img class="h-100 rounded-lg"  src="/image-6.jpeg">
+
+---
+
+# Gaming studio
+
+<img class="h-100 rounded-lg"  src="/image-7.jpg">
+
+---
+
+# Waarom gebruiken we Vue?
+
+- **Single Page application**
+- **Easy to learn**
+- **Versatile**
+
+<img class="h-80 rounded-lg"  src="/image-8.jpg">
+
+
+---
+
 # Korte inhoud
 
 
 - **Tools** - Welke tools gaan we gebruiken
 - **Project setup** - Hoe een project op te zetten
+- **Vite** - Building tool
 - **Folder structure** -  Folder structuur van een project
 - **Vue syntax** - Hoe ziet een Vue file eruit
-- **Nuttige packages** - Hoe ziet een Vue file eruit
+- **Nuttige packages** - Welke packages raden we aan
 - **Tailwind / windicss** - Hoe werkt tailwind
 - **Wat gaan we maken** - Wat is het doel van deze les
 - **API uitleg** - Hoe werkt de API die we gaan gebruiken
@@ -51,6 +106,10 @@ image: https://miro.medium.com/max/1400/0*W06-5WbBC9aEKDVT
 - **ESLint** - Code formatter / Regels
 - **WindiCSS IntelliSense** - IntelliSense voor WindiCSS
 
+<br/>
+
+## VueDev tools in chrome
+
 ---
 layout: image-right
 image: https://source.unsplash.com/collection/94734566/1920x1080
@@ -70,6 +129,17 @@ npx degit Robbe95/vue-skeleton my-project-name
 cd my-project-name
 npm i
 ```
+
+---
+
+# Vite
+
+[Vite docs](https://vitejs.dev/)
+
+## Super snelle buildtool gebaseerd op ESBuild
+
+<img class="h-40 rounded-lg mt-20"  src="https://vitejs.dev/logo.svg">
+
 
 ---
 
@@ -404,7 +474,7 @@ const emitFoo = () => {
 # Template
 ## Event handeling
 
-### V-for
+### @Click
 ```html
 <script setup>
   const count = ref(0)
@@ -507,24 +577,18 @@ const emitFoo = () => {
 // mouse.js
 import { ref, onMounted, onUnmounted } from 'vue'
 
-// by convention, composable function names start with "use"
 export function useMouse() {
-  // state encapsulated and managed by the composable
   const x = ref(0)
   const y = ref(0)
 
-  // a composable can update its managed state over time.
   function update(event) {
     x.value = event.pageX
     y.value = event.pageY
   }
 
-  // a composable can also hook into its owner component's
-  // lifecycle to setup and teardown side effects.
   onMounted(() => window.addEventListener('mousemove', update))
   onUnmounted(() => window.removeEventListener('mousemove', update))
 
-  // expose managed state as return value
   return { x, y }
 }
 ```
@@ -587,9 +651,18 @@ import { useRouter } from 'router'
 const router = useRouter()
 
 router.push('/login')
-
-
 ```
+
+---
+
+
+# Nuttige packages
+
+- **vue-router** - De router van Vue
+- **vue-i18n** - I18n voor Vue
+- **pinia** -  State managment voor Vue
+- **unplugin-auto-import** - Automatisch importen van Vue components
+- **unplugin-vue-components** - Automatisch importen van Vue functies
 
 ---
 
@@ -615,5 +688,22 @@ router.push('/login')
 
 ---
 
+# Wat gaan we maken?
 
+## Pokemon Website
+### Figma link
+[https://www.figma.com/file/QeWa9FEHrAO6lqa5V6pQ8K/Sollicitatie-test?node-id=124%3A796](https://www.figma.com/file/QeWa9FEHrAO6lqa5V6pQ8K/Sollicitatie-test?node-id=124%3A796)
+
+### API link
+#### Alle pokemon
+[https://stoplight.io/mocks/appwise-be/pokemon/57519009/pokemon](https://www.figma.com/file/QeWa9FEHrAO6lqa5V6pQ8K/Sollicitatie-test?node-id=124%3A796)
+
+#### 1 Pokemon
+
+[https://pokeapi.co/api/v2/pokemon/133](https://pokeapi.co/api/v2/pokemon/133)
+
+
+---
+
+<img class="absolute  top-0 left-0 -z-10"  src="/image-9.png">
 
