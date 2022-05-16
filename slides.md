@@ -98,6 +98,25 @@ class: px-20
 - **Template** - HTML met Vue directives
 - **Style** - CSS
 
+```javascript
+<script setup>
+import { ref, onMounted } from 'vue'
+const input = ref(null)
+
+onMounted(() => {
+  input.value.focus()
+})
+</script>
+
+<template>
+  <input ref="input" />
+</template>
+
+<style scoped>
+</style>
+```
+
+
 ---
 
 # Script
@@ -130,75 +149,473 @@ export default {
 
 ---
 
+# Component
+
+## Defining
+
+```html
+<script setup>
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<template>
+  <button @click='count++'>
+</template>
+```
+
+## Usage
+
+```javascript
+<script setup>
+import ButtonCounter from './ButtonCounter.vue'
+</script>
+
+<template>
+  <h1>Here is a child component!</h1>
+  <ButtonCounter />
+</template>
+```
+
+---
+
 # Composition API
 
+### Ref
+
+```javascript
+const count = ref(0)
+
+console.log(count) // { value: 0 }
+console.log(count.value) // 0
+
+count.value++
+console.log(count.value) // 1
+```
 
 ---
 
-# Diagrams
+# Composition API
+### Computed
+```javascript
+import { ref, computed } from 'vue'
 
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
+const author = ref({
+  name: 'John Doe',
+  books: [
+    'Vue 2 - Advanced Guide',
+    'Vue 3 - Basic Guide',
+    'Vue 4 - The Mystery'
+  ]
+})
 
-<div class="grid grid-cols-3 gap-10 pt-4 -mb-6">
+// a computed ref
+const publishedBooksMessage = computed(() => {
+  return author.books.length > 0 ? 'Yes' : 'No'
+})
 
-```mermaid {scale: 0.5}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
+
+```
+---
+
+# Composition API
+## Lifecycle hooks
+
+### Before mounted
+
+```javascript
+import { onBeforeMounted } from 'vue'
+
+onBeforeMounted(() => {
+  console.log(`before mounted.`)
+})
+```
+### Mounted
+
+```javascript
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  console.log(`the component is now mounted.`)
+})
 ```
 
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
+
+---
+
+# Composition API
+## Lifecycle hooks
+
+### Before update
+
+```javascript
+import { onBeforeUpdated } from 'vue'
+
+onBeforeUpdated(() => {
+  console.log(`before mounted.`)
+})
+```
+### Update
+
+```javascript
+import { onUpdated } from 'vue'
+
+onUpdated(() => {
+  console.log(`the component is now mounted.`)
+})
 ```
 
-```plantuml {scale: 0.7}
-@startuml
+---
 
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
+# Composition API
+## Lifecycle hooks
+
+### Before unmounted
+
+```javascript
+import { onBeforeUnmounted } from 'vue'
+
+onBeforeUnmounted(() => {
+  console.log(`before unmounted.`)
+})
+```
+### Unmounted
+
+```javascript
+import { onUnmounted } from 'vue'
+
+onUnmounted(() => {
+  console.log(`the component is now unmounted.`)
+})
+```
+
+---
+
+# Composition API
+## Watchers
+
+```javascript
+import { ref, watch } from 'vue'
+
+const counter = ref(0)
+
+watch(
+  () => counter.value),
+  () => {
+    console.log('counter changed')
+  },
+)
+```
+
+---
+
+# Composition API
+## Props
+
+```javascript
+const props = defineProps(['foo'])
+
+console.log(props.foo)
+```
+
+---
+
+---
+
+# Composition API
+## Events
+
+### Define
+```javascript
+const emits = defineEmits(['foo'])
+
+const emitFoo = () => {
+  emits('foo', extraData)
 }
 
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
+```
 
-cloud {
-  [Example 1]
-}
+### Usage
+```html
+<MyComponent @foo="callback" />
 
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
+<script setup>
+  const callback = (data) => {
+    console.log(data)
   }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
+</script>
 
+```
+---
 
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
+# Template
+## Class en style bindings
 
-@enduml
+```html
+<div
+  class="static"
+  :class="{ active: isActive, 'text-danger': hasError }"
+></div>
+
+<div :class="[isError ? 'bg-red-500' : 'bg-green-500']"></div>
+
+<div :style="{ 'font-size': fontSize + 'px' }"></div>
+
 ```
 
-</div>
+---
 
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
+# Template
+## Conditional rendering
+
+### V-if
+```html
+<h1 v-if="awesome">Vue is awesome!</h1>
+<div v-else-if="otherCondiation">Test</div>
+<h1 v-else>Oh no 😢</h1>
+
+```
+
+### V-show
+```html
+<h1 v-show="ok">Hello!</h1>
+```
+
+---
+
+# Template
+## List rendering
+
+### V-for
+```html
+<script setup>
+  const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
+</script>
+
+<template>
+  <li v-for="item in items" :key="item.message">
+    {{ item.message }}
+  </li>
+  <span v-for="n in 10">{{ n }}</span>
+</template>
+```
+
+---
+
+# Template
+## Event handeling
+
+### V-for
+```html
+<script setup>
+  const count = ref(0)
+</script>
+
+<template>
+  <button @click="count++">Add 1</button>
+  <p>Count is: {{ count }}</p>
+</template>
+```
+---
+
+# Template
+## Event handeling
+
+### Modifiers
+
+```html
+<!-- the click event's propagation will be stopped -->
+<a @click.stop="doThis"></a>
+
+<!-- the submit event will no longer reload the page -->
+<form @submit.prevent="onSubmit"></form>
+
+<!-- modifiers can be chained -->
+<a @click.stop.prevent="doThat"></a>
+
+<!-- just the modifier -->
+<form @submit.prevent></form>
+
+<!-- the click event will be triggered at most once -->
+<a @click.once="doThis"></a>
+
+<input @keyup.enter="submit" />
+```
+
+--- 
+
+# Template
+## Form input bindings
+
+### Modifiers
+
+```html
+<p>Message is: {{ message }}</p>
+<input v-model="message" placeholder="edit me" />
+```
+
+--- 
+
+# Template
+## Form input bindings
+
+### Modifiers
+
+```html
+<p>Message is: {{ message }}</p>
+<input v-model="message" placeholder="edit me" />
+```
+
+---
+
+# Composition API
+## Slots
+
+### Define
+```html
+<button class="fancy-btn">
+  <slot></slot> <!-- slot outlet -->
+</button>
+
+```
+
+### Usage
+```html
+<FancyButton>
+  Click me! <!-- slot content -->
+</FancyButton>
+```
+---
+
+# Style
+## Scoped
+
+```html
+<style scoped>
+.class {
+  background-color: '#FFFFFF'
+}
+</style>
+```
+
+---
+
+# Composables
+
+## Define
+
+```javascript
+// mouse.js
+import { ref, onMounted, onUnmounted } from 'vue'
+
+// by convention, composable function names start with "use"
+export function useMouse() {
+  // state encapsulated and managed by the composable
+  const x = ref(0)
+  const y = ref(0)
+
+  // a composable can update its managed state over time.
+  function update(event) {
+    x.value = event.pageX
+    y.value = event.pageY
+  }
+
+  // a composable can also hook into its owner component's
+  // lifecycle to setup and teardown side effects.
+  onMounted(() => window.addEventListener('mousemove', update))
+  onUnmounted(() => window.removeEventListener('mousemove', update))
+
+  // expose managed state as return value
+  return { x, y }
+}
+```
+
+---
+
+# Composables
+
+## Usage
+
+```html
+<script setup>
+import { useMouse } from './mouse.js'
+
+const { x, y } = useMouse()
+</script>
+
+<template>Mouse position is at: {{ x }}, {{ y }}</template>
+```
 
 
 ---
-layout: center
-class: text-center
+
+# Router
+
+## Define
+```javascript
+import Home from '@/pages/Home.vue'
+import About from '@/pages/About.vue'
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/details', component: About },
+]
+
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHistory(),
+  routes,
+})
+
+const app = Vue.createApp({})
+app.use(router)
+
+app.mount('#app')
+```
 ---
 
-# Learn More
+# Router
+## Usage
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+```html
+<template>
+  <router-link to="/">Go to Home</router-link>
+  <router-link to="/about">Go to About</router-link>
+</template>
+```
+
+```javascript
+import { useRouter } from 'router'
+const router = useRouter()
+
+router.push('/login')
+
+
+```
+
+---
+
+
+# WindiCSS
+
+## Cheat sheet
+[Cheat sheet](https://nerdcave.com/tailwind-cheat-sheet)
+
+## Examples
+
+```html
+<div class="bg-green-500"></div>
+<div class="bg-green-500/50"></div>
+<div class="bg-[#FFFFFF]"></div>
+<div class="h-full"></div>
+<div class="h-8"></div>
+<div class="flex flex-row gap-2"></div>
+<div class="md:bg-green-500 bg-red-500"></div>
+<div class="transition hover:bg-red-500 bg-green-500 duration-400"></div>
+
+```
+
+---
+
+
+
