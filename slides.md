@@ -321,8 +321,6 @@ console.log(props.foo)
 
 ---
 
----
-
 # Composition API
 ## Events
 
